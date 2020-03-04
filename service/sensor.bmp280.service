@@ -1,0 +1,11 @@
+[Unit]
+Description=Sensor bmp280 -> RMQ service
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/sensor
+ExecStart=/opt/sensor/bmp280.rmq
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
