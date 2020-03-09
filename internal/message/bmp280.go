@@ -22,7 +22,7 @@ type BmpMessageData struct {
 	Temperature float32 `json:"temperature"`
 }
 
-func GetMessage(sensor *bsbmp.BMP, name string) (BmpMessage, error) {
+func GetMessageBmp280(sensor *bsbmp.BMP, name string) (BmpMessage, error) {
 	// Read atmospheric pressure in mmHg
 	pressure, err := sensor.ReadPressureMmHg(bsbmp.ACCURACY_STANDARD)
 	if err != nil {
@@ -42,8 +42,8 @@ func GetMessage(sensor *bsbmp.BMP, name string) (BmpMessage, error) {
 	}, nil
 }
 
-func GetMessageAsJson(sensor *bsbmp.BMP, name string) ([]byte, error) {
-	message, err := GetMessage(sensor, name)
+func GetMessageBmp280AsJson(sensor *bsbmp.BMP, name string) ([]byte, error) {
+	message, err := GetMessageBmp280(sensor, name)
 	jsonMessage, _ := json.Marshal(message)
 	return jsonMessage, err
 }

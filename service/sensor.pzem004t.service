@@ -1,10 +1,10 @@
 [Unit]
-Description=Sensor bmp280 -> RMQ service
+Description=Sensor Pzem004t -> RMQ service
 After=network.target
 
 [Service]
 WorkingDirectory=/opt/sensor
-ExecStart=/opt/sensor/bmp280.rmq
+ExecStart=/opt/sensor/pzem004t.rmq
 Restart=always
 RestartSec=30
 

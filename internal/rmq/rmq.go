@@ -2,6 +2,7 @@ package rmq
 
 import (
 	"fmt"
+	"log"
 	"net"
 	"time"
 
@@ -24,6 +25,7 @@ type RMQ struct {
 }
 
 func NewRMQ(conf Config) (r *RMQ, err error) {
+	log.Println("Start connect to RMQ")
 	r = &RMQ{}
 	r.conn, err = amqp.DialConfig(fmt.Sprintf("amqp://%s:%s@%s/", conf.Login, conf.Pass, net.JoinHostPort(conf.Host, conf.Port)),
 		amqp.Config{Dial: func(network, addr string) (net.Conn, error) {
@@ -42,7 +44,7 @@ func NewRMQ(conf Config) (r *RMQ, err error) {
 	if err != nil {
 		return r, err
 	}
-
+	log.Println("Success connected to RMQ")
 	return r, nil
 }
 
