@@ -16,8 +16,9 @@ type Config struct {
 				Ticker int `yaml:"ticker"`
 			} `yaml:"bmp280"`
 			Peacefair struct {
-				Uart   string `yaml:"uart"`
-				Ticker int    `yaml:"ticker"`
+				Uart    string `yaml:"uart"`
+				Ticker  int    `yaml:"ticker"`
+				Timeout int    `yaml:"timeout"`
 			} `yaml:"peacefair"`
 		} `yaml:"device"`
 	} `yaml:"service_sensor"`

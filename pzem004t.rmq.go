@@ -7,11 +7,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/be-ys/pzem-004t-v3/pzem"
 	"github.com/dark705/go_sensor/internal/config"
 	"github.com/dark705/go_sensor/internal/helper"
 	"github.com/dark705/go_sensor/internal/message"
 	"github.com/dark705/go_sensor/internal/rmq"
+	"github.com/dark705/pzem-004t-v3/pzem"
 )
 
 func main() {
@@ -28,7 +28,10 @@ func main() {
 	}()
 
 	//sensor
-	pzem004t, err := pzem.Setup(pzem.Config{Port: config.ServiceSensor.Device.Peacefair.Uart, Speed: 9600})
+	pzem004t, err := pzem.Setup(pzem.Config{
+		Port:    config.ServiceSensor.Device.Peacefair.Uart,
+		Speed:   9600,
+		TimeOut: time.Duration(config.ServiceSensor.Device.Peacefair.Timeout) * time.Second})
 	helper.FailOnError(err, "Fail connect to pzem004t")
 
 	ticker := time.NewTicker(time.Second * time.Duration(config.ServiceSensor.Device.Peacefair.Ticker))
@@ -48,6 +51,7 @@ func main() {
 	}()
 
 	log.Printf("Got OS signal: %v. Exit...\n", <-osSignals)
+	ticker.Stop()
 }
 
 func ReadPzem004tAndSendRmq(sensor pzem.Probe, r *rmq.RMQ) {
@@ -55,5 +59,5 @@ func ReadPzem004tAndSendRmq(sensor pzem.Probe, r *rmq.RMQ) {
 	helper.FailOnError(err, "Fail get message pzem004t")
 	err = r.Send(jsonMessage)
 	helper.FailOnError(err, "Fail on send RMQ message")
-	log.Printf("Succes sentconfig RMQ message:%s", jsonMessage)
+	log.Printf("Succes sent RMQ message:%s", jsonMessage)
 }

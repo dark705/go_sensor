@@ -62,6 +62,7 @@ func main() {
 	}()
 
 	log.Printf("Got OS signal: %v. Exit...\n", <-osSignals)
+	ticker.Stop()
 }
 
 func ReadBmp280AndSendRmq(bmp280 *bsbmp.BMP, r *rmq.RMQ) {
@@ -69,5 +70,5 @@ func ReadBmp280AndSendRmq(bmp280 *bsbmp.BMP, r *rmq.RMQ) {
 	helper.FailOnError(err, "Fail get message bmp280")
 	err = r.Send(jsonMessage)
 	helper.FailOnError(err, "Fail on send RMQ message")
-	log.Printf("Succes sentconfig RMQ message:%s", jsonMessage)
+	log.Printf("Succes sent RMQ message:%s", jsonMessage)
 }

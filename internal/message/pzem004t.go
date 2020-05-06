@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/be-ys/pzem-004t-v3/pzem"
 	"github.com/dark705/go_sensor/internal/helper"
+	"github.com/dark705/pzem-004t-v3/pzem"
 )
 
 const SensorPzem004t string = "pzem004t.v3"
