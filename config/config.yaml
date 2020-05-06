@@ -20,6 +20,7 @@ service_sensor:
     peacefair:
       uart: '/dev/ttyS0'
       ticker: 60
+      timeout: 5
     bmp280:
       ticker: 600
   output:
