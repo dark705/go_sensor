@@ -1,2 +1,4 @@
 .idea
 bmp280.rmq
+bin
+!bin/.gitkeep

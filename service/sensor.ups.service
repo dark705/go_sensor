@@ -1,0 +1,12 @@
+[Unit]
+Description=Sensor ups -> RMQ service
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/sensor
+ExecStart=/opt/sensor/bin/ups.rmq
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

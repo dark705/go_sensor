@@ -20,6 +20,10 @@ type Config struct {
 				Ticker  int    `yaml:"ticker"`
 				Timeout int    `yaml:"timeout"`
 			} `yaml:"peacefair"`
+			Nut struct {
+				IP     string `yaml:"ip"`
+				Ticker int    `yaml:"ticker"`
+			} `yaml:"nut"`
 		} `yaml:"device"`
 	} `yaml:"service_sensor"`
 }

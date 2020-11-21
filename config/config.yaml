@@ -21,6 +21,9 @@ service_sensor:
       uart: '/dev/ttyS0'
       ticker: 60
       timeout: 5
+    nut:
+      ip: 'localhost'
+      ticker: 60
     bmp280:
       ticker: 600
   output:
