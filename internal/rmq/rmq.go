@@ -10,18 +10,19 @@ import (
 )
 
 type Config struct {
-	Login   string `yaml:"user"`
-	Pass    string `yaml:"password"`
-	Host    string `yaml:"ip"`
-	Port    string `yaml:"port"`
-	Timeout int    `yaml:"timeout"`
-	Queue   string `yaml:"queue"`
+	Login    string `yaml:"user"`
+	Pass     string `yaml:"password"`
+	Host     string `yaml:"ip"`
+	Port     string `yaml:"port"`
+	Timeout  int    `yaml:"timeout"`
+	Queue    string `yaml:"queue"`
+	Exchange string `yaml:"exchange"`
 }
 
 type RMQ struct {
-	conn *amqp.Connection
-	ch   *amqp.Channel
-	q    amqp.Queue
+	conn     *amqp.Connection
+	ch       *amqp.Channel
+	exchange string
 }
 
 func NewRMQ(conf Config) (r *RMQ, err error) {
@@ -40,16 +41,19 @@ func NewRMQ(conf Config) (r *RMQ, err error) {
 		return r, err
 	}
 
-	r.q, err = r.ch.QueueDeclare(conf.Queue, true, false, false, false, nil)
+	err = r.ch.ExchangeDeclare(conf.Exchange, amqp.ExchangeFanout, true, false, false, false, nil)
 	if err != nil {
 		return r, err
 	}
+
+	r.exchange = conf.Exchange
+
 	log.Println("Success connected to RMQ")
 	return r, nil
 }
 
 func (r *RMQ) Send(message []byte) error {
-	return r.ch.Publish("", r.q.Name, false, false,
+	return r.ch.Publish(r.exchange, "", false, false,
 		amqp.Publishing{
 			DeliveryMode: amqp.Persistent,
 			Body:         message,
